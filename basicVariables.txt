@@ -1,0 +1,115 @@
+Topsen Basic Variables
+R9	Number of Resistors
+L9	Number Of Inductors
+C9	Number of capacitors
+G9	Number of VCCS
+R8, c8, L8, G8 Same as above (?)
+N1	INPUT NODE
+N2	OUTPUT NODE
+N0	Mirror of Input Node ?
+N	Number of Nodes
+
+S[N,0]	Resistor Nu8mber
+S[N,1]	RESISTOR VALUE
+S[N,2]	NODE1
+S[N,3]	NODE2
+
+M[N,0]	Inductor Number
+M[N,1]	INDUCTOR VALUE
+M[N,2]	NODE1
+M[N,3]	NODE2
+
+A[N,0]	Capacitor Number
+A[N,1]	CAPACITOR VALUE
+A[N,2] 	NODE1
+A[N,3]	NODE2
+
+G[N,0]	GM VALUE
+G[N,1]	TYPE
+G[N,2]	NODE1 input + (send)
+G[N,3]	NODE2 input -
+G[N,4]	NODE3 output + (recieve)
+G[N,5]	NODE4 output -
+
+G6	Number of Gm of type 2 gM/s
+G7	Number of Gm of type 3 gM*s
+
+S9	ITERATOR
+
+T3	?
+I6	Command Number	Defined Line 0070 Post Command
+I7	Pre Command Number
+I9	INTERATOR
+
+U	BRANCH DATA MATRIX.... pBM
+U[N,0]	COMPONENT TYPE
+U[N,1]	COMPONENT NUMBER
+U[N,2]	NODE1
+U[N,3]	NODE2
+U[N,4]	Parrallel branch to this one
+U[N,5]	Scratch
+U[N,6]	COMPONENT VALUE
+
+T9	TOTAL NUMBER OF COMPONENTS
+P9	TOTAL NUMBER OF PASSIVE COMPONENTS
+P1	?
+P2	Pi
+
+W[N+1]
+V	[T8,N] NODE BRANCH NETWORK
+T8	Line 1230 to 1320; Line 4030
+V1	NODE1?
+V2	NODE2?
+T4	?	//Used in Subroutine 4000; Line 2060;
+T5	?
+T6	?
+S3 Total Reactive Components nTotalReactiveComponents
+E[T9,S3]	TREE LIST MATRIX
+F[T9,S3]	TREE LIST MATRIX
+D[2,S3]		Numerator and Denomitor
+D[1,x]		Numerator
+D[2,x]		Denominator
+Q1	?		Double(?)
+B[N,N]		ACTIVE LOOP
+------------------------------------
+	Blocks of Code
+
+Line 590 Start
+	Line 589 IF goto 2770
+	Line 640 IF Goto 1820
+	Line 1000 ON Goto 1040,1010,1030
+	Line 1020 Goto 1040
+	Line 1040 Next
+		Line 1600
+			Nasty For Loops
+		Line 1770
+Line 2020 End	Goto 2830
+
+Line 2030 Start
+	Line 2080 ON goto 
+	Line 2240 Gosub 3000
+	Line 2460 gosub 7000
+Line 2920 End STOP
+
+--------------------------------
+Rules for translating Basic to C++
+
+Arrays
+DIM A[10] will have 11 elements, indexes
+	0 to 10
+
+int *a = new int[10] will have 10 elements
+	indexed 0 to 9
+
+DIM A[N] is the same as new int[N+1]
+
+DIM A[N+1]		//has N+2 elements
+FOR I=0 TO N+1	// loops N+2 times
+	A[I] = 0
+NEXT I
+
+is the sames as
+
+int *a = new int[n+2]	// has N+2 elementsx
+for(i=0;i < n+2;++i)	// loops N+2 Times
+	a[i] = 0;
